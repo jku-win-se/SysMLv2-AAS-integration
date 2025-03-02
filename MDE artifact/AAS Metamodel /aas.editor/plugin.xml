@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated aas -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="AAS.presentation.AASModelWizardID"
+            name="%_UI_AASModelWizard_label"
+            class="AAS.presentation.AASModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/AASModelFile.gif">
+         <description>%_UI_AASModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated aas -->
+      <editor
+            id="AAS.presentation.AASEditorID"
+            name="%_UI_AASEditor_label"
+            icon="icons/full/obj16/AASModelFile.gif"
+            extensions="aas"
+            class="AAS.presentation.AASEditor"
+            contributorClass="AAS.presentation.AASActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

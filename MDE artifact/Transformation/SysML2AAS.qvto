@@ -1,0 +1,270 @@
+modeltype SysMLv2MM uses 'https://www.omg.org/spec/SysML/20240201';
+modeltype AASMM uses 'www.jku.at/AAS';
+
+
+transformation SysML2AAS(in srcModel:SysMLv2MM, out AASMM);
+
+property allEntities : List(AASMM::Entity) = List{};
+
+main() {
+ var rootNamespace := srcModel.rootObjects()![SysMLv2MM::Namespace];
+ object AasModelRoot {
+ name := "ModelContainer";
+ assetadministrationshells := rootNamespace.ownedPackages() -> map toAssetAdministrationShell();
+ };
+
+}
+
+//Query for Namespace
+//return packages to be mapped with Asset administration shells
+query SysMLv2MM ::Element::ownedPackages(): Sequence(SysMLv2MM ::Package) {	
+	return self.ownedRelationship[SysMLv2MM ::OwningMembership][ownedRelatedElement->forAll(not oclIsKindOf(AnnotatingElement))].ownedRelatedElement[Package];
+
+}
+
+
+//Query for Namespace
+//return ownedRelatinships that are not annotations 
+query SysMLv2MM ::Element::ownedMemberMemberships(): OrderedSet(SysMLv2MM ::OwningMembership) {	
+	return self.ownedRelationship[SysMLv2MM ::OwningMembership][ownedRelatedElement->forAll(not oclIsKindOf(AnnotatingElement))];
+}
+
+//Query for Package
+//return Elements that are annotations 
+query SysMLv2MM ::Element::ownedComments(): Sequence(SysMLv2MM::Comment) {	
+	return self.ownedRelationship[SysMLv2MM ::OwningMembership][ownedRelatedElement->forAll( oclIsKindOf(Comment))].ownedRelatedElement[Comment];
+}
+
+//Query for Package
+//return Elements of Package that will be mapped to Entity
+query SysMLv2MM::Element::ownedMembers(): Sequence(SysMLv2MM::Element) {
+	return self.ownedMemberMemberships().ownedRelatedElement -> select(e | not e.oclIsKindOf(SysMLv2MM::AnnotatingElement) 
+																			and not e.oclIsKindOf(SysMLv2MM::ActionDefinition) 
+																			and not e.oclIsKindOf(SysMLv2MM::ActionUsage)
+																			and not e.oclIsKindOf(SysMLv2MM::AttributeUsage)
+																			and not e.oclIsKindOf(SysMLv2MM::AttributeDefinition)
+																			and not e.oclIsKindOf(SysMLv2MM::Expression)
+																			and not e.oclIsKindOf(SysMLv2MM::StateDefinition)
+																			and not e.oclIsKindOf(SysMLv2MM::StateUsage));
+}
+//Query for Package
+//retun Elements of Package that will be mapped to Operation 
+query SysMLv2MM::Element::ownedActions(): Sequence (SysMLv2MM::Element){
+	return self.ownedMemberMemberships().ownedRelatedElement -> select (e | e.oclIsKindOf(ActionDefinition) and e.oclIsKindOf(ActionUsage));
+}
+//Query for Package
+//retun Elements of Package that will be mapped to State 
+query SysMLv2MM::Element::ownedStateDef(): Sequence (SysMLv2MM::Element){
+	return self.ownedRelationship[SysMLv2MM ::OwningMembership][ownedRelatedElement->forAll( oclIsKindOf(StateDefinition))].ownedRelatedElement;
+}
+
+
+//Query for Package
+//retun Elements of Package that will be mapped to Property 
+
+query SysMLv2MM::Element::ownedAttributes(): Sequence (SysMLv2MM::Element){
+	return self.ownedRelationship[SysMLv2MM ::OwningMembership][ownedRelatedElement->forAll( oclIsKindOf(AttributeDefinition))].ownedRelatedElement[AttributeDefinition];
+}
+
+mapping SysMLv2MM::Element::toAssetAdministrationShell(): AASMM::AssetAdministrationShell {
+
+result.idShort := self.name;
+//create submodel for hierarchical structure
+var submodel := object AASMM::Submodel {
+	idShort := "Hierarchical Structures";
+	
+
+//	submodelelement += self.ownedRelationship[SysMLv2MM ::OwningMembership][ownedRelatedElement->forAll( oclIsKindOf(ActionDefinition) or oclIsKindOf(ActionUsage) )].ownedRelatedElement -> map toSubmodelelementCollection4Operation();
+//	submodelelement += self.ownedActions()-> map toSummodelelementCollection4Action();
+	submodelelement += self.ownedMembers() -> map toEntity();
+	submodelelement += self.ownedComments() -> map toSubmodelelementCollection4ExtensionorDocument();
+	submodelelement += self.ownedAttributes() -> map toProperty();
+//	submodelelement += self.ownedStateDef() -> map toStateDef();
+	
+	
+	
+	//submodelelement += self.ownedRelationship[SysMLv2MM ::OwningMembership][ownedRelatedElement->forAll( oclIsKindOf(Comment))].ownedRelatedElement[Comment] -> map toSubmodelelementCollection4Extension();
+};
+
+//assign created submodel to the AAS 
+result.submodel += submodel;
+//result.submodel.extension += self.ownedRelationship[SysMLv2MM ::OwningMembership][ownedRelatedElement->forAll( oclIsKindOf(Comment))].ownedRelatedElement[Comment].map toExtension();
+//result.extension := extension;
+}
+//map element (owningMembership) to Entity and add qualifier per each	
+mapping SysMLv2MM::Element::toEntity(): AASMM::Entity{
+	result.idShort := self.name;
+	
+	//create qualifier 
+	var qualifier := object AASMM::Qualifier {
+		//type := self.owningMembership.memberElement.name;
+		type := self.owningMembership.memberElement.toString().substringBefore("Impl@").substringAfter('org.omg.sysml.lang.sysml.impl.');
+	};
+	//add qualifier per every entity
+	result.qualifier := qualifier;
+	
+	//if it has feature membership that does not contatin Attribute, map features to entity, otherwise map it to SubmodelElementCollection 
+	result.submodelelement += self.ownedRelationship[SysMLv2MM::FeatureMembership][ownedRelatedElement->forAll(not oclIsKindOf(AttributeUsage))] -> map feature2Entity();
+	//add properties
+	result.submodelelement += self.ownedRelationship[SysMLv2MM::FeatureMembership][ownedRelatedElement->forAll(oclIsKindOf(AttributeUsage))].ownedRelatedElement[SysMLv2MM::FeatureMembership] -> map toSubmodelElementCollection4NestedProperty();
+	//add documents 
+	result.submodelelement += self.ownedComments()[Documentation] -> map toSubmodelelementCollection4ExtensionorDocument();
+	
+	//allEntities += result;
+
+
+
+
+}
+
+mapping SysMLv2MM::Element::toSubmodelelementCollection4State(): AASMM::SubmodelElementCollection{
+//result.submodelelement := self.map  toState();
+
+}
+mapping SysMLv2MM::Element::toProperty(): AASMM::Property{
+result.idShort := self.name;
+	var qualifier := object AASMM::Qualifier {
+		type := self.owningMembership.memberElement.toString().substringBefore("Impl@").substringAfter('org.omg.sysml.lang.sysml.impl.');
+		
+	};
+		result.qualifier := qualifier;
+
+}
+
+
+mapping SysMLv2MM::Element::toSubmodelelementCollection4Operation(): AASMM::SubmodelElementCollection{
+	result.submodelelement += self -> map toOperation();
+}
+mapping SysMLv2MM::Element::toOperation(): AASMM::Operation{
+result.idShort := self.name;
+	var qualifier := object AASMM::Qualifier {
+		type := self.owningMembership.memberElement.toString().substringBefore("Impl@").substringAfter('org.omg.sysml.lang.sysml.impl.');
+		
+	};
+		result.qualifier := qualifier;
+
+}
+
+mapping SysMLv2MM::FeatureMembership::feature2Entity(): AASMM::Entity{
+	result.idShort := self.ownedMemberName;
+	//create qualifier per every nested entity  
+	var qualifier := object AASMM::Qualifier {
+	
+		type := self.ownedMemberElement.toString().substringBefore("Impl@").substringAfter('org.omg.sysml.lang.sysml.impl.');
+	};
+	//add qualifier per every nested entity
+	result.qualifier := qualifier;
+	//create relationElement per each feature membership 
+	
+	var tempEntity := result;
+	result.submodelelement +=  self -> map toRelationElement(tempEntity);
+	
+	result.submodelelement += self.ownedRelationship[SysMLv2MM::FeatureMembership][ownedRelatedElement->forAll(not oclIsKindOf(AttributeUsage))]  -> map feature2Entity();
+	result.submodelelement += self.ownedRelationship[SysMLv2MM::FeatureMembership][ownedRelatedElement->forAll(oclIsKindOf(AttributeUsage))].ownedRelatedElement[SysMLv2MM::FeatureMembership] -> map toSubmodelElementCollection4NestedProperty();
+	//result.submodelelement += self.ownedRelationship[SysMLv2MM::FeatureMembership][ownedRelatedElement->forAll(not oclIsKindOf(AttributeUsage))] -> map feature2Entity();
+
+}
+
+
+
+mapping SysMLv2MM::FeatureMembership::toRelationElement(tempEntity : AASMM::Entity ): AASMM::RelationshipElement{
+
+result.name := "defined by";
+var firstReferable := object AASMM::Reference {
+	name := self.ownedMemberName;
+	key := object AASMM::Key {
+	referable := tempEntity;
+	}
+};
+result.second := firstReferable;
+
+var secondReferable := object AASMM::Reference {
+name := self.target[SysMLv2MM::PortUsage] -> first().occurrenceDefinition.name -> first() ;
+//	name := self.ownedRelationship[SysMLv2MM::PortUsage].portDefinition.name ->first();
+	key := object AASMM::Key {
+//    referable := allEntities -> selectOne(e| e.idShort = name); --> is not created yet
+	}
+};
+result.first := firstReferable;
+result.second := secondReferable;
+//key.referable.idShort := self.ownedMemberName;
+}
+
+mapping SysMLv2MM::FeatureMembership::toSubmodelElementCollection4NestedProperty():AASMM::SubmodelElementCollection{
+result.submodelelement += self -> map toNestedProperty();
+result.submodelelement += self -> map toRelationElement4Property();
+
+}
+
+mapping SysMLv2MM::FeatureMembership::toNestedProperty():Property{
+result.idShort := self.ownedMemberName;
+//create qualifier
+var qualifier := object AASMM::Qualifier {
+//type := self.ownedMemberElement.qualifiedName
+//toString().substringBefore("Impl@").substringAfter('org.omg.sysml.lang.sysml.impl.');
+--log( self.ownedMemberElement.);
+};
+//add qualifier per every nested entity
+result.qualifier := qualifier;
+}
+
+mapping SysMLv2MM::FeatureMembership::toRelationElement4Property(): AASMM::RelationshipElement{
+
+result.name := "generalises";
+var firstReferable := object AASMM::Reference {
+	name := self.ownedMemberName;
+	key := object AASMM::Key {
+//	referable := tempEntity;
+	}
+};
+result.second := firstReferable;
+
+var secondReferable := object AASMM::Reference {
+name := self.toString() ;
+	name := self.target[SysMLv2MM::AttributeUsage].attributeDefinition.name ->first();
+	key := object AASMM::Key {
+	}
+};
+result.first := firstReferable;
+result.second := secondReferable;
+}
+//
+//mapping SysMLv2MM::Element:: toAnnotationElement(): AASMM::Referable
+//	disjuncts
+//		SysMLv2MM::Comment::toExtension,
+//		SysMLv2MM::Documentation::toFile;
+
+mapping SysMLv2MM::Comment::toSubmodelelementCollection4ExtensionorDocument(): AASMM::SubmodelElementCollection{
+	
+	if self.oclIsKindOf(SysMLv2MM::Documentation) then {
+	
+    result.submodelelement := self[Documentation].map toFile();
+    
+    var qualifier := object AASMM::Qualifier {
+	type:= "Documentation";
+	};
+	result.qualifier := qualifier;
+	//qualifier.type := "Document";
+	
+	}  endif; 
+	
+	if  self.oclIsKindOf(SysMLv2MM::Comment) then {
+	
+	var extension := object AASMM::Extension{
+	name:= self.body;
+	};
+	var qualifier := object AASMM::Qualifier {
+	type:= "Comment";
+	//type := self.ownedMemberElement.toString().substringBefore("Impl@").substringAfter('org.omg.sysml.lang.sysml.impl.');
+	};
+	
+	result.extension := extension;
+	result.qualifier := qualifier;
+	
+	
+	} endif;
+}
+mapping SysMLv2MM::Documentation::toFile(): AASMM::File{
+
+	result.idShort := self.body;
+}
