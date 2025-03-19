@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAS:AasModelRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AAS="www.jku.at/AAS" name="ModelContainer">
+  <assetadministrationshells idShort="State Definition Example-2">
+    <submodel idShort="Hierarchical Structures">
+      <submodelelement xsi:type="AAS:Property" idShort="VehicleStartSignal">
+        <qualifier type="AttributeDefinition"/>
+      </submodelelement>
+      <submodelelement xsi:type="AAS:Property" idShort="VehicleOnSignal">
+        <qualifier type="AttributeDefinition"/>
+      </submodelelement>
+      <submodelelement xsi:type="AAS:Property" idShort="VehicleOffSignal">
+        <qualifier type="AttributeDefinition"/>
+      </submodelelement>
+      <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="state def ">
+        <extension name="VehicleState"/>
+        <qualifier type="StateDefinition"/>
+      </submodelelement>
+      <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="stateUsageCollection">
+        <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="s1">
+          <extension name="off"/>
+          <qualifier type="StateUsage"/>
+        </submodelelement>
+        <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="s2">
+          <extension/>
+          <qualifier/>
+        </submodelelement>
+        <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="s3">
+          <extension/>
+          <qualifier/>
+        </submodelelement>
+      </submodelelement>
+      <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="transitionUsageCollection">
+        <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="t1">
+          <extension name="off_to_starting"/>
+          <qualifier type="TransitionUsage"/>
+          <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="actionsCollection">
+            <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="a1">
+              <qualifier type="ActionUsage"/>
+              <submodelelement xsi:type="AAS:Operation" idShort="first off"/>
+            </submodelelement>
+            <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="a2">
+              <qualifier type="ActionUsage"/>
+              <submodelelement xsi:type="AAS:Operation" idShort="accept ">
+                <submodelelement xsi:type="AAS:Property" idShort="VehicleOnSignal "/>
+              </submodelelement>
+            </submodelelement>
+            <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="a3">
+              <qualifier type="Action Usage"/>
+              <submodelelement xsi:type="AAS:Operation"/>
+            </submodelelement>
+          </submodelelement>
+        </submodelelement>
+        <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="t2">
+          <extension name="starting_to_on"/>
+          <qualifier type="TransitionUsage" value=""/>
+        </submodelelement>
+        <submodelelement xsi:type="AAS:SubmodelElementCollection" idShort="t3">
+          <extension name="on_to_off"/>
+          <qualifier type="TransitionUsage"/>
+        </submodelelement>
+      </submodelelement>
+    </submodel>
+  </assetadministrationshells>
+</AAS:AasModelRoot>

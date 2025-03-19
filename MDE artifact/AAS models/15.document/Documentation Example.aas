@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAS:AasModelRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AAS="www.jku.at/AAS" name="ModelContainer">
+  <assetadministrationshells idShort="Documentation Example">
+    <submodel idShort="Hierarchical Structures">
+      <submodelelement xsi:type="AAS:Entity" idShort="Automobile">
+        <qualifier type="PartDefinition"/>
+        <submodelelement xsi:type="AAS:SubmodelElementCollection">
+          <qualifier type="Documentation"/>
+          <submodelelement xsi:type="AAS:File" idShort="This documentation of Automobile. "/>
+        </submodelelement>
+      </submodelelement>
+      <submodelelement xsi:type="AAS:SubmodelElementCollection">
+        <qualifier type="Documentation"/>
+        <submodelelement xsi:type="AAS:File" idShort="This is documentation of the owning &#xA;package.&#xA;"/>
+      </submodelelement>
+    </submodel>
+  </assetadministrationshells>
+</AAS:AasModelRoot>

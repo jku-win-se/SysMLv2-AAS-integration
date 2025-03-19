@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AAS:AasModelRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AAS="www.jku.at/AAS" name="ModelContainer">
+  <assetadministrationshells idShort="Comment Example">
+    <submodel idShort="Hierarchical Structures">
+      <submodelelement xsi:type="AAS:Entity" idShort="Automobile">
+        <qualifier type="PartDefinition"/>
+      </submodelelement>
+      <submodelelement xsi:type="AAS:SubmodelElementCollection">
+        <extension name="This is a comment, which is a part of the model, &#xA;annotating (by default) it's owning namespace. "/>
+        <qualifier type="Comment"/>
+      </submodelelement>
+      <submodelelement xsi:type="AAS:SubmodelElementCollection">
+        <extension name="This is a named comment. "/>
+        <qualifier type="Comment"/>
+      </submodelelement>
+      <submodelelement xsi:type="AAS:SubmodelElementCollection">
+        <extension name="This is an unnamed comment, annotating an &#xA;explicitly specified element. &#xA;"/>
+        <qualifier type="Comment"/>
+      </submodelelement>
+    </submodel>
+  </assetadministrationshells>
+</AAS:AasModelRoot>
