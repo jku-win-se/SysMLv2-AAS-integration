@@ -1,41 +1,22 @@
-SysMLv2-AAS Transformation
-This repository provides a model transformation from SysMLv2 models to Asset Administration Shell (AAS) structures. The aim is to align systems engineering models with the digital twin ecosystem in Industry 4.0.
+# 🔗 SysMLv2–AAS Integration
 
-💡 Overview
-This tool supports:
+**SysMLv2–AAS Integration** bridges the gap between systems modeling and Industry 4.0 by transforming SysMLv2 models into Asset Administration Shell (AAS) representations. This integration enables digital twins to seamlessly ingest and leverage engineering designs modeled with SysMLv2.
 
-Parsing SysMLv2 model artifacts
+---
 
-Mapping model elements to AAS submodels
+## ✨ Key Features
 
-Producing AAS-compliant output for use in digital twin systems
+- 🔄 Converts SysMLv2 models into AAS submodels
+- 🧩 Modular transformation pipeline for flexibility and extension
+- 📦 Clean output compatible with digital twin ecosystems
+- 🧪 Sample SysMLv2 models included for experimentation
 
-📁 Repository Structure
-MDE artifact model update/ – Contains transformation logic and related artifacts
+---
 
-models/ – Sample SysMLv2 input models
+## 🗂️ Project Structure
 
-.DS_Store – System-generated file (can be ignored)
-
-README.md – Project documentation
-
-⚙️ Requirements
-Java 11 or higher
-
-Gradle (or use the provided Gradle wrapper)
-
-(Optional) Eclipse IDE with Xtend support, for development purposes
-
-🚀 Getting Started
-bash
-git clone https://github.com/jku-win-se/sysmlv2-aas-transformation.git
-cd sysmlv2-aas-transformation
-./gradlew build
-> 🚧 Usage instructions for running the transformation will be added in upcoming updates.
-
-🤝 Contributions
-Contributions are welcome! Fork the repository and submit a pull request. If you're planning a major change, open an issue first to discuss it.
-
-📝 License
-Licensed under the MIT License. Please see the LICENSE file for full details.
-
+```text
+├── MDE artifact model update/   # Transformation logic and scripts
+├── models/                      # Example SysMLv2 models
+├── .gitignore                   # Ignore rules
+└── README.md                    # Project documentation (this file)
