@@ -7,8 +7,10 @@
 ## ✨ Key Features
 
 - 🔄 Converts SysMLv2 models into AAS submodels
-- 🧩 Modular transformation pipeline for flexibility and extension
-- 📦 Clean output compatible with digital twin ecosystems
+- 🧩 Modular transformation pipeline based on [Eclipse EMF](https://www.eclipse.org/modeling/emf/)
+- ⚙️ Includes an [Ecore-based metamodel](https://wiki.eclipse.org/Ecore) representing AAS elements
+- 🔧 Implements model transformation logic in [QVTo (QVT Operational)](https://www.eclipse.org/mmt/qvto/)
+- 📦 Clean output compatible with Industry 4.0 digital twin infrastructures
 - 🧪 Sample SysMLv2 models included for experimentation
 
 ---
@@ -16,7 +18,7 @@
 ## 🗂️ Project Structure
 
 ```text
-├── MDE artifact model update/   # Transformation logic and scripts
-├── models/                      # Example SysMLv2 models
+├── MDE artifact model update/   # Transformation logic (QVTo) and Ecore models
+├── models/                      # Example SysMLv2 input models
 ├── .gitignore                   # Ignore rules
 └── README.md                    # Project documentation (this file)
