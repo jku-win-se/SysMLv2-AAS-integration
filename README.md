@@ -18,7 +18,7 @@
 ## 🗂️ Project Structure
 
 ```text
-├── MDE artifact model update/   # Transformation logic (QVTo) and Ecore models
-├── models/                      # Example SysMLv2 input models
-├── .gitignore                   # Ignore rules
-└── README.md                    # Project documentation (this file)
+├── Descriptive artifact/            # Contains SysMLv2 model examples
+├── MDE artifact/                    # QVTo transformation logic and AAS Ecore metamodel
+├── .gitignore                       # Git ignore rules
+└── README.md                        # Project documentation (this file)
