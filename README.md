@@ -10,8 +10,6 @@
 - 🧩 Modular transformation pipeline based on [Eclipse EMF](https://www.eclipse.org/modeling/emf/)
 - ⚙️ Includes an [Ecore-based metamodel](https://wiki.eclipse.org/Ecore) representing AAS elements
 - 🔧 Implements model transformation logic in [QVTo (QVT Operational)](https://www.eclipse.org/mmt/qvto/)
-- 📦 Clean output compatible with Industry 4.0 digital twin infrastructures
-- 🧪 Sample SysMLv2 models included for experimentation
 
 ---
 
