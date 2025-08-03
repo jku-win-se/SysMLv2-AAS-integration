@@ -25,7 +25,7 @@
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="aas.ecore#/"/>
       </ownedRepresentationDescriptors>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_hK2vsdI8Ee6OBvM5ycMKVA" name="AAS-metamodel-paper" repPath="#_hK1hkNI8Ee6OBvM5ycMKVA" changeId="1754217970117">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_hK2vsdI8Ee6OBvM5ycMKVA" name="AAS-metamodel-paper" repPath="#_hK1hkNI8Ee6OBvM5ycMKVA" changeId="1754238352224">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="aas.ecore#/"/>
       </ownedRepresentationDescriptors>
@@ -14290,9 +14290,10 @@
       <ownedElements xmi:type="diagram:DNodeListElement" uid="_ArN_JNI9Ee6OBvM5ycMKVA" name="entityType : EntityType = SelfManagedEntity" tooltipText="">
         <target xmi:type="ecore:EAttribute" href="aas.ecore#//Entity/entityType"/>
         <semanticElements xmi:type="ecore:EAttribute" href="aas.ecore#//Entity/entityType"/>
-        <ownedStyle xmi:type="diagram:BundledImage" uid="_ArN_JdI9Ee6OBvM5ycMKVA" labelAlignment="LEFT" description="_ouAYFtI8Ee6OBvM5ycMKVA">
+        <ownedStyle xmi:type="diagram:BundledImage" uid="_hdjFdXCGEfCxbO7sUmWRgg" labelAlignment="LEFT">
           <customFeatures>labelFormat</customFeatures>
           <customFeatures>labelColor</customFeatures>
+          <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>

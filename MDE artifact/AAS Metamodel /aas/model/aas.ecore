@@ -325,8 +325,7 @@
     <eLiterals name="CoManagedEntity" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//ComposableElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="entityType" lowerBound="1"
-        eType="#//EntityType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="entityType" eType="#//EntityType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RelationshipElement" eSuperTypes="#//ComposableElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="first" lowerBound="1" eType="#//Reference"
