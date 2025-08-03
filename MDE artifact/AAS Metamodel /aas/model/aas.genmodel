@@ -378,5 +378,7 @@
     <genClasses image="false" ecoreClass="aas.ecore#//ComposableElement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference aas.ecore#//ComposableElement/submodelelement"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="aas.ecore#//EventElement"/>
+    <genClasses ecoreClass="aas.ecore#//BasicEventElement"/>
   </genPackages>
 </genmodel:GenModel>

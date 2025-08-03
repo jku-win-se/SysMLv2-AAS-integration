@@ -17,7 +17,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="security" eType="#//Security"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="assetInformation" lowerBound="1"
         eType="#//AssetInformation" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="asset" lowerBound="1" eType="#//Asset"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="asset" eType="#//Asset"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="submodel" ordered="false"
         upperBound="-1" eType="#//Submodel" containment="true"/>
@@ -27,12 +27,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="Identifiable" abstract="true" eSuperTypes="#//Referable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="administration" eType="#//AdministrativeInformation"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="identification" lowerBound="1"
-        eType="#//Identifier" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="identification" eType="#//Identifier"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Referable" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="idShort" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="idShort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="description" ordered="false"
         upperBound="-1" eType="#//LangString" containment="true"/>
@@ -471,8 +470,8 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="added"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" lowerBound="1"
-        eType="#//Qualifier" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//Qualifier"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Qualifier">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
