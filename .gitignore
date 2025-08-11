@@ -50,3 +50,7 @@ generated/
 # Others
 *.bak
 *.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
