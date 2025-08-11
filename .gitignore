@@ -4,48 +4,8 @@
 *.war
 *.ear
 
-# Eclipse project files
-*.launch
-.settings/
-.project
-.classpath
-
-# IntelliJ project files
-*.iml
-.idea/
-out/
-
-# VS Code settings
-.vscode/
-
 # OS-specific files
 .DS_Store
-Thumbs.db
-
-# Logs and temp files
-*.log
-*.tmp
-
-# Build directories
-bin/
-build/
-target/
-
-# Maven
-.mvn/
-!**/src/**
-
-# Gradle
-.gradle/
-build/
-
-# Generated files
-gen/
-generated/
-
-# Others
-*.bak
-*.swp
 
 # Preserve QVTO transformation files
 !*.qvto
