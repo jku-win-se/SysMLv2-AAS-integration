@@ -174,18 +174,11 @@ public class MultiplicityRangeImpl extends MultiplicityImpl implements Multiplic
 	 * @generated
 	 */
 	public boolean isSetBound() {
-		return !getBound().isEmpty();
+	    return !getBound().isEmpty() || 
+	           eIsSet(SysMLPackage.MULTIPLICITY_RANGE__LOWER_BOUND) || 
+	           eIsSet(SysMLPackage.MULTIPLICITY_RANGE__UPPER_BOUND);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetBound() {
-		return eIsSet(SysMLPackage.MULTIPLICITY_RANGE__LOWER_BOUND)
-			|| eIsSet(SysMLPackage.MULTIPLICITY_RANGE__UPPER_BOUND);
-	}
 
 	/**
 	 * The cached invocation delegate for the '{@link #hasBounds(int, int) <em>Has Bounds</em>}' operation.
