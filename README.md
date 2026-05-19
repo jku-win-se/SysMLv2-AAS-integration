@@ -1,6 +1,6 @@
 # SysML v2 → AAS Mapping
 
-[![CI](https://github.com/jku-win-se/sysmlv2-aas-mapping/actions/workflows/ci.yml/badge.svg)](https://github.com/jku-win-se/sysmlv2-aas-mapping/actions/workflows/ci.yml)
+[![CI](https://github.com/jku-win-se/SysMLv2-AAS-integration/actions/workflows/ci.yml/badge.svg)](https://github.com/jku-win-se/SysMLv2-AAS-integration/actions/workflows/ci.yml)
 
 Model-to-model transformation that generates **Asset Administration Shell (AAS)** models
 from **SysML v2** system-engineering models, implemented with Eclipse EMF and QVTo.
@@ -32,7 +32,7 @@ SubmodelElement, ConceptDescription).
 ## Repository Structure
 
 ```
-sysmlv2-aas-mapping/
+SysMLv2-AAS-integration/
 ├── aas/               # EMF metamodel plugin — AAS Ecore metamodel (aas.ecore)
 ├── aas.edit/          # EMF-generated edit plugin (item providers, adapters)
 ├── aas.editor/        # EMF-generated tree-based editor plugin
@@ -45,14 +45,12 @@ sysmlv2-aas-mapping/
 ├── examples/          # Test suite (6/24 implemented; run-all.sh / run-all.ps1)
 ├── lib/metamodels/    # Vendored sysml.ecore (nsURI 20250201)
 ├── docs/              # Architecture docs, mapping tables, design decisions
-│   ├── DESIGN-AND-PLAN.md        # D-001 … D-007 (ADRs)
 │   ├── mapping-tables.md
 │   ├── architecture.md
 │   └── how-to-extend.md
 ├── .github/workflows/ # CI/CD (GitHub Actions — build + transform)
 ├── pom.xml            # Root Maven POM (modules: aas-metamodel, transformation)
 ├── LICENSE            # Eclipse Public License v2
-├── CLAUDE.md          # Conventions for AI-assisted development
 └── README.md
 ```
 
@@ -71,8 +69,8 @@ sysmlv2-aas-mapping/
 ### Build
 
 ```bash
-git clone https://github.com/jku-win-se/sysmlv2-aas-mapping.git
-cd sysmlv2-aas-mapping
+git clone https://github.com/jku-win-se/SysMLv2-AAS-integration.git
+cd SysMLv2-AAS-integration
 mvn package -pl aas-metamodel,transformation --also-make
 ```
 
