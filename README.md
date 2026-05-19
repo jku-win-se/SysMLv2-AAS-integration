@@ -36,9 +36,21 @@ sysmlv2-aas-mapping/
 ├── aas/               # EMF metamodel plugin — AAS Ecore metamodel (aas.ecore)
 ├── aas.edit/          # EMF-generated edit plugin (item providers, adapters)
 ├── aas.editor/        # EMF-generated tree-based editor plugin
-├── docs/              # Architecture decisions and design notes
-│   └── DESIGN-AND-PLAN.md
-├── task-briefs/       # Engineering-process docs (gitignored)
+├── aas-metamodel/     # Maven module — standalone AAS metamodel JAR
+├── transformation/    # Maven module — QVTo scripts + Java/EMF CLI runner
+│   ├── sysml2aas.qvto            # QVTo entry point
+│   ├── mappings/                  # QVTo mapping rules (structural, behavioral, relationships, comments)
+│   ├── lib/helpers.qvto           # Shared navigation queries
+│   └── src/main/java/             # RunTransformation.java + SysML2AASTransformer.java
+├── examples/          # Test suite (6/24 implemented; run-all.sh / run-all.ps1)
+├── lib/metamodels/    # Vendored sysml.ecore (nsURI 20250201)
+├── docs/              # Architecture docs, mapping tables, design decisions
+│   ├── DESIGN-AND-PLAN.md        # D-001 … D-007 (ADRs)
+│   ├── mapping-tables.md
+│   ├── architecture.md
+│   └── how-to-extend.md
+├── .github/workflows/ # CI/CD (GitHub Actions — build + transform)
+├── pom.xml            # Root Maven POM (modules: aas-metamodel, transformation)
 ├── LICENSE            # Eclipse Public License v2
 ├── CLAUDE.md          # Conventions for AI-assisted development
 └── README.md
@@ -46,44 +58,64 @@ sysmlv2-aas-mapping/
 
 ---
 
-## Prerequisites
+## Getting Started
+
+### Prerequisites
 
 | Tool | Version | Notes |
 |------|---------|-------|
-| Eclipse Modeling Tools | ≥ 2023-09 | Includes EMF, Xtext, QVTo |
-| Java | ≥ 17 | Eclipse runtime requirement |
-| QVT Operational (QVTo) | bundled with Eclipse MDT | For running the transformation |
-| Git | any | Cloning and version control |
+| Java | 11+ | Maven build |
+| Maven | 3.8+ | Build system |
+| Eclipse Modeling Tools | ≥ 2023-09 | Optional — for editing .qvto scripts in Eclipse |
 
-> **No Maven/Gradle build** — the project uses Eclipse PDE plug-in layout.
-
----
-
-## Getting Started
+### Build
 
 ```bash
-# 1. Clone the repository
 git clone https://github.com/jku-win-se/sysmlv2-aas-mapping.git
+cd sysmlv2-aas-mapping
+mvn package -pl aas-metamodel,transformation --also-make
+```
 
-# 2. Open Eclipse Modeling Tools
-# 3. File → Import → Existing Projects into Workspace
-#    Select the cloned directory; import all three plug-in projects:
-#      aas/  aas.edit/  aas.editor/
+### Run the transformation
 
-# 4. Run as Eclipse Application (PDE launch) to open the tree-based AAS editor
+```bash
+java -jar transformation/target/transformation-1.0-SNAPSHOT-jar-with-dependencies.jar \
+  --input   path/to/input.xmi \
+  --output  path/to/output.aas \
+  --sysml-mm lib/metamodels/sysml.ecore \
+  --aas-mm   aas/model/aas.ecore
+```
 
-# 5. (Planned) Run the QVTo transformation:
-#    Right-click the .qvto file → Run As → QVTo Transformation
+### Run the test suite
+
+```bash
+# Linux/macOS
+bash examples/run-all.sh
+
+# Windows
+pwsh examples/run-all.ps1
 ```
 
 ---
 
-## Planned Work
+## Status
 
-- [ ] QVTo transformation script (SysML v2 → AAS)
-- [ ] Example SysML v2 input models
-- [ ] Automated test suite for the transformation
-- [ ] Documentation of the mapping rules
+| Component | State |
+|---|---|
+| AAS Ecore metamodel (`aas/`) | ✅ Complete |
+| Maven standalone build (`aas-metamodel/`, `transformation/`) | ✅ Complete |
+| QVTo transformation (`transformation/*.qvto`) | ✅ Complete (structural + behavioral + relationships) |
+| Java/EMF CLI runner (`RunTransformation.java`) | ✅ Complete |
+| Example test suite (`examples/`, 6/24) | ⚠️ Partial — 5 SKIP, 1 PASS |
+| CI/CD (GitHub Actions) | ✅ Green |
+| Mapping rule documentation (`docs/mapping-tables.md`) | ✅ Complete |
+| Architecture documentation (`docs/architecture.md`) | ✅ Complete |
+
+### Open items
+
+- Expand example coverage from 6/24 to 24/24 (requires XMI serialisation of remaining `.sysml` inputs)
+- Complete behavioral and relationship mapping coverage in Java runner
+- Cross-reference resolution in `toRelationElement()` (known limitation, documented in `transformation/mappings/relationships.qvto`)
 
 ---
 
