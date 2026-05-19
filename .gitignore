@@ -1,11 +1,29 @@
-# Java build artifacts
+# Eclipse project files
+.project
+.classpath
+.settings/
+
+# Compiled class files
+bin/
 *.class
-*.jar
-*.war
-*.ear
 
-# OS-specific files
+# Python bytecode
+*.pyc
+__pycache__/
+
+# Maven build output
+target/
+build/
+
+# Logs
+*.log
+
+# OS artifacts
 .DS_Store
+Thumbs.db
 
-# Preserve QVTO transformation files
-!*.qvto
+# Engineering process (not for public repo)
+task-briefs/
+docs/handoff-*.md
+data-out/
+scratch/
